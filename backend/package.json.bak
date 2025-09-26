@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "start": "node server.js",
-    "dev": "npx nodemon server.js"
-  },
+ "scripts": {
+  "start": "\"C:\\Program Files\\nodejs\\node.exe\" server.js",
+  "dev": "\"C:\\Program Files\\nodejs\\node.exe\" ./node_modules/nodemon/bin/nodemon.js server.js"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -17,10 +17,12 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "jsonwebtoken": "^9.0.2",
-    "mysql2": "^3.2.0",
+    "mysql2": "^3.9.8",
     "sequelize": "^6.37.7"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
   }
 }
+
+
