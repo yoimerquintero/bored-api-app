@@ -46,6 +46,7 @@ const Activity = sequelize.define('Activity', {
   }
 }, {
   tableName: 'actividades',
+  freezeTableName: true,
   timestamps: false
 });
 

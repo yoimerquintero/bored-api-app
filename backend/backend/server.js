@@ -1,6 +1,8 @@
+// server.js
 const express = require('express');
 const cors = require('cors');
 const { testConnection } = require('./config/database');
+const sequelize = require('./config/database');
 const { User, Activity, Favorite } = require('./models');
 const { authRoutes, activityRoutes, favoriteRoutes } = require('./routes');
 
@@ -15,12 +17,7 @@ app.use(express.json());
 const syncDatabase = async () => {
   try {
     await testConnection();
-    
-    // Sincronizar todos los modelos
-    await User.sync({ force: false });
-    await Activity.sync({ force: false });
-    await Favorite.sync({ force: false });
-    
+    await sequelize.sync({ alter: true }); 
     console.log('✅ Modelos sincronizados con la base de datos');
   } catch (error) {
     console.error('❌ Error al sincronizar modelos:', error);
@@ -109,12 +106,16 @@ app.use((error, req, res, next) => {
 });
 
 // Iniciar servidor y sincronizar BD
-app.listen(PORT, async () => {
-  console.log(`🎯 Servidor corriendo en http://localhost:${PORT}`);
-  console.log(`📊 Ruta de prueba BD: http://localhost:${PORT}/api/test-db`);
-  console.log(`📚 Documentación: http://localhost:${PORT}/api`);
-  
+const startServer = async () => {
   await syncDatabase();
-});
+
+  app.listen(PORT, () => {
+    console.log(`🎯 Servidor corriendo en http://localhost:${PORT}`);
+    console.log(`📊 Ruta de prueba BD: http://localhost:${PORT}/api/test-db`);
+    console.log(`📚 Documentación: http://localhost:${PORT}/api`);
+  });
+};
+
+startServer();
 
 module.exports = app;

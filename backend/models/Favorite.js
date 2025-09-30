@@ -7,28 +7,13 @@ const Favorite = sequelize.define('Favorite', {
     primaryKey: true,
     autoIncrement: true
   },
-  usuario_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: 'usuarios',
-      key: 'id'
-    }
-  },
-  actividad_key: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    references: {
-      model: 'actividades',
-      key: 'key'
-    }
-  },
   fecha_guardado: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW
   }
 }, {
   tableName: 'favoritos',
+  freezeTableName: true,
   timestamps: false
 });
 
