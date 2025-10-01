@@ -1,5 +1,5 @@
 const { sequelize, testConnection } = require('./config/database');
-const { User, Activity, Favorite } = require('./models');
+const { Usuario, Actividad, Favorito } = require('./models');
 
 async function run() {
   await testConnection();
@@ -8,12 +8,12 @@ async function run() {
   console.log('Tablas sincronizadas');
 
   // Creación de ejemplo (opcional)
-  const [user] = await User.findOrCreate({
+  const [usuario] = await Usuario.findOrCreate({
     where: { correo: 'demo@example.com' },
     defaults: { nombre: 'Demo', contraseña: 'password123' }
   });
 
-  const [activity] = await Activity.findOrCreate({
+  const [actividad] = await Actividad.findOrCreate({
     where: { key: 'test-1' },
     defaults: {
       activity: 'Actividad de prueba',
@@ -24,7 +24,7 @@ async function run() {
     }
   });
 
-  await Favorite.create({ usuario_id: user.id, actividad_key: activity.key });
+  await Favorito.create({ usuario_id: usuario.id, actividad_key: actividad.key });
   console.log('Datos de ejemplo creados');
   process.exit(0);
 }

@@ -1,3 +1,4 @@
+// config/database.js
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
@@ -16,11 +17,9 @@ const sequelize = new Sequelize(
 const testConnection = async () => {
   try {
     await sequelize.authenticate();
-    console.log('✅ Conexión a la base de datos establecida correctamente');
-    return true;
+    console.log('✅ Conexión a la base de datos exitosa');
   } catch (error) {
-    console.error('❌ Error al conectar con la base de datos:', error);
-    return false;
+    console.error('❌ Error al conectar a la base de datos:', error);
   }
 };
 

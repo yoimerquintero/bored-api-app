@@ -1,9 +1,9 @@
-const UserController = require('./UserController');
-const ActivityController = require('./ActivityController');
-const FavoriteController = require('./FavoriteController');
+const UsuarioController = require('./UsuarioController');
+const ActividadController = require('./ActividadController');
+const FavoritoController = require('./FavoritoController');
 
 module.exports = {
-  UserController,
-  ActivityController,
-  FavoriteController
+  UsuarioController,
+  ActividadController,
+  FavoritoController
 };

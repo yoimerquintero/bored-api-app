@@ -1,6 +1,6 @@
 const { testConnection } = require('./config/database');
 
-const run = async () => {
+const ejecutar = async () => {
   const conectado = await testConnection();
   if (conectado) {
     console.log('🎉 ¡Todo listo para usar la base de datos!');
@@ -9,4 +9,4 @@ const run = async () => {
   }
 };
 
-run();
+ejecutar();
