@@ -1,15 +1,15 @@
-const { UserController, ActivityController } = require('../controllers');
+const { UsuarioController, ActividadController } = require('../controllers');
 
-describe('Controllers Tests', () => {
-  let userController;
-  let activityController;
+describe('Tests de Controladores', () => {
+  let usuarioController;
+  let actividadController;
 
   beforeAll(() => {
-    userController = new UserController();
-    activityController = new ActivityController();
+    usuarioController = new UsuarioController();
+    actividadController = new ActividadController();
   });
 
-  describe('UserController', () => {
+  describe('UsuarioController', () => {
     test('debería validar campos obligatorios en registro', async () => {
       const mockReq = {
         body: {
@@ -24,7 +24,7 @@ describe('Controllers Tests', () => {
         json: jest.fn()
       };
 
-      await userController.register(mockReq, mockRes);
+      await usuarioController.register(mockReq, mockRes);
 
       expect(mockRes.status).toHaveBeenCalledWith(400);
       expect(mockRes.json).toHaveBeenCalledWith({
@@ -47,7 +47,7 @@ describe('Controllers Tests', () => {
         json: jest.fn()
       };
 
-      await userController.register(mockReq, mockRes);
+      await usuarioController.register(mockReq, mockRes);
 
       expect(mockRes.status).toHaveBeenCalledWith(400);
       expect(mockRes.json).toHaveBeenCalledWith({
@@ -57,7 +57,7 @@ describe('Controllers Tests', () => {
     });
   });
 
-  describe('ActivityController', () => {
+  describe('ActividadController', () => {
     test('debería manejar parámetros de filtro correctamente', async () => {
       const mockReq = {
         query: {
@@ -71,15 +71,15 @@ describe('Controllers Tests', () => {
       };
 
       // Mock del servicio
-      activityController.activityService.getActivitiesByFilters = jest.fn()
+      actividadController.actividadService.getActivitiesByFilters = jest.fn()
         .mockResolvedValue({
           success: true,
           data: { test: 'data' }
         });
 
-      await activityController.getActivitiesByFilters(mockReq, mockRes);
+      await actividadController.getActivitiesByFilters(mockReq, mockRes);
 
-      expect(activityController.activityService.getActivitiesByFilters)
+      expect(actividadController.actividadService.getActivitiesByFilters)
         .toHaveBeenCalledWith({
           type: 'education',
           participants: 2

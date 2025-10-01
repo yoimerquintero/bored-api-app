@@ -1,9 +1,9 @@
-const authRoutes = require('./authRoutes');
-const activityRoutes = require('./activityRoutes');
-const favoriteRoutes = require('./favoriteRoutes');
+const usuarioRoutes = require('./UsuarioRoutes');
+const actividadRoutes = require('./ActividadRoutes');
+const favoritoRoutes = require('./FavoritoRoutes');
 
 module.exports = {
-  authRoutes,
-  activityRoutes,
-  favoriteRoutes
+  usuarioRoutes,
+  actividadRoutes,
+  favoritoRoutes
 };

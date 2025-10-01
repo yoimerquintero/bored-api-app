@@ -1,19 +1,19 @@
-const { ActivityService, UserService, FavoriteService } = require('../services');
+const { ActividadService, UsuarioService, FavoritoService } = require('../services');
 
-describe('Services Tests', () => {
-  let activityService;
-  let userService;
-  let favoriteService;
+describe('Tests de Servicios', () => {
+  let actividadService;
+  let usuarioService;
+  let favoritoService;
 
   beforeAll(() => {
-    activityService = new ActivityService();
-    userService = new UserService();
-    favoriteService = new FavoriteService();
+    actividadService = new ActividadService();
+    usuarioService = new UsuarioService();
+    favoritoService = new FavoritoService();
   });
 
-  describe('ActivityService', () => {
+  describe('ActividadService', () => {
     test('debería obtener una actividad aleatoria', async () => {
-      const result = await activityService.getRandomActivity();
+      const result = await actividadService.getRandomActivity();
       
       expect(result.success).toBe(true);
       expect(result.data).toHaveProperty('activity');
@@ -23,25 +23,25 @@ describe('Services Tests', () => {
 
     test('debería manejar errores correctamente', async () => {
       // Simular un error cambiando la URL
-      const originalUrl = activityService.boredApiUrl;
-      activityService.boredApiUrl = 'http://invalid-url';
+      const originalUrl = actividadService.boredApiUrl;
+      actividadService.boredApiUrl = 'http://invalid-url';
       
-      const result = await activityService.getRandomActivity();
+      const result = await actividadService.getRandomActivity();
       expect(result.success).toBe(false);
       expect(result.error).toBeDefined();
       
-      activityService.boredApiUrl = originalUrl;
+      actividadService.boredApiUrl = originalUrl;
     });
   });
 
-  describe('UserService', () => {
+  describe('UsuarioService', () => {
     test('debería generar un token válido', () => {
       const mockUser = {
         id: 1,
         correo: 'test@example.com'
       };
 
-      const token = userService.generateToken(mockUser);
+      const token = usuarioService.generateToken(mockUser);
       expect(typeof token).toBe('string');
       expect(token.length).toBeGreaterThan(0);
     });
@@ -52,8 +52,8 @@ describe('Services Tests', () => {
         correo: 'test@example.com'
       };
 
-      const token = userService.generateToken(mockUser);
-      const decoded = userService.verifyToken(token);
+      const token = usuarioService.generateToken(mockUser);
+      const decoded = usuarioService.verifyToken(token);
       
       expect(decoded.id).toBe(mockUser.id);
       expect(decoded.correo).toBe(mockUser.correo);

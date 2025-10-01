@@ -1,17 +1,22 @@
-const User = require('./User');
-const Activity = require('./Activity');
-const Favorite = require('./Favorite');
+// models/index.js
+const { sequelize } = require('../config/database');
 
-// Relación User ↔ Favorites
-User.hasMany(Favorite, { foreignKey: 'usuario_id', sourceKey: 'id', as: 'favoritos' });
-Favorite.belongsTo(User, { foreignKey: 'usuario_id', targetKey: 'id', as: 'usuario' });
+const Usuario = require('./Usuario');
+const Actividad = require('./Actividad');
+const Favorito = require('./Favorito');
 
-// Relación Activity ↔ Favorites
-Activity.hasMany(Favorite, { foreignKey: 'actividad_key', sourceKey: 'key', as: 'favoritos' });
-Favorite.belongsTo(Activity, { foreignKey: 'actividad_key', targetKey: 'key', as: 'actividad' });
+// Relación Usuario ↔ Favoritos
+Usuario.hasMany(Favorito, { foreignKey: 'usuario_id', as: 'favoritos' });
+Favorito.belongsTo(Usuario, { foreignKey: 'usuario_id', as: 'usuario' });
+
+// Relación Actividad ↔ Favoritos
+Actividad.hasMany(Favorito, { foreignKey: 'actividad_key', as: 'favoritos' });
+Favorito.belongsTo(Actividad, { foreignKey: 'actividad_key', as: 'actividad' });
+
 
 module.exports = {
-  User,
-  Activity,
-  Favorite
+  sequelize,
+  Usuario,
+  Actividad,
+  Favorito
 };
