@@ -7,8 +7,12 @@ import cors from 'cors';
 // Configuración de la base de datos
 import { testConnection, sync } from './config/database.js';
 
+import './models/index.js';
+
+
 // Rutas centralizadas
 import { UsuarioRoutes, ActividadRoutes, FavoritoRoutes } from './routes/index.js';
+import { FORCE } from 'sequelize/lib/index-hints';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -21,7 +25,7 @@ app.use(json());
 const syncDatabase = async () => {
   try {
     await testConnection();
-    await sync({ alter: true });
+    await sync({ force: true });
     console.log('✅ Modelos sincronizados con la base de datos');
   } catch (error) {
     console.error('❌ Error al sincronizar modelos:', error);

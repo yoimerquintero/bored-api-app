@@ -1,9 +1,6 @@
-const usuarioRoutes = require('./UsuarioRoutes');
-const actividadRoutes = require('./ActividadRoutes');
-const favoritoRoutes = require('./FavoritoRoutes');
+// routes/index.js
+import UsuarioRoutes from './UsuarioRoutes.js';
+import ActividadRoutes from './ActividadRoutes.js';
+import FavoritoRoutes from './FavoritoRoutes.js';
 
-module.exports = {
-  usuarioRoutes,
-  actividadRoutes,
-  favoritoRoutes
-};
+export { UsuarioRoutes, ActividadRoutes, FavoritoRoutes };
