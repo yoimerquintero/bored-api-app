@@ -1,8 +1,8 @@
-const UsuarioController = require('./UsuarioController');
-const ActividadController = require('./ActividadController');
-const FavoritoController = require('./FavoritoController');
+import UsuarioController from './UsuarioController.js';
+import ActividadController from './ActividadController.js';
+import FavoritoController from './FavoritoController.js';
 
-module.exports = {
+export default {
   UsuarioController,
   ActividadController,
   FavoritoController
