@@ -1,4 +1,4 @@
-const { testConnection } = require('./config/database');
+import { testConnection } from './config/database.js';
 
 const ejecutar = async () => {
   const conectado = await testConnection();

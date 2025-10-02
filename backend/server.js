@@ -1,20 +1,24 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const { testConnection } = require('./config/database');
-const { usuarioRoutes, actividadRoutes, favoritoRoutes } = require('./routes');
+// server.js
+import dotenv from 'dotenv';
+dotenv.config();
+
+import express, { json } from 'express';
+import cors from 'cors';
+
+import { testConnection } from './config/database.js';
+import { UsuarioRoutes, ActividadRoutes, FavoritoRoutes } from './routes/index.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Middlewares
+// ------------------- Middlewares -------------------
 app.use(cors());
-app.use(express.json());
+app.use(json());
 
-// Montar rutas principales
-app.use('/api/usuarios', usuarioRoutes);
-app.use('/api/actividades', actividadRoutes);
-app.use('/api/favoritos', favoritoRoutes);
+// ------------------- Rutas -------------------
+app.use('/api/usuarios', UsuarioRoutes);
+app.use('/api/actividades', ActividadRoutes);
+app.use('/api/favoritos', FavoritoRoutes);
 
 // Ruta de prueba de conexión a la BD
 app.get('/api/test-db', async (req, res) => {
@@ -40,8 +44,10 @@ app.get('/api', (req, res) => {
   });
 });
 
-// Iniciar servidor y sincronizar BD
+// ------------------- Iniciar servidor -------------------
 app.listen(PORT, async () => {
   console.log(`🌐 Servidor corriendo en http://localhost:${PORT}`);
   await testConnection();
 });
+
+export default app;

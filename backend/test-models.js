@@ -1,5 +1,5 @@
-const { sequelize, testConnection } = require('./config/database');
-const { Usuario, Actividad, Favorito } = require('./models');
+import { sequelize, testConnection } from './config/database.js';
+import { Usuario, Actividad, Favorito } from './models';
 
 async function run() {
   await testConnection();

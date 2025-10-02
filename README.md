@@ -1,15 +1,28 @@
-# bored-api-app
-Aplicación web para encontrar actividades cuando estás aburrido
+# Bored API App
 
-## Características
-- Actividades aleatorias
-- Filtros por tipo, participantes, accesibilidad
-- Sistema de favoritos
-- Autenticación de usuarios
+Aplicación web para encontrar actividades cuando estás aburrido.
 
-## Tecnologías
-- Backend: Node.js, Express, MySQL
-- Frontend: HTML, CSS, JavaScript
+## 🚀 Características
+- Actividades aleatorias de la Bored API
+- Filtros por tipo, participantes, precio y accesibilidad
+- Sistema de favoritos con autenticación de usuarios
+- Búsqueda de actividades
+- Estadísticas de actividades favoritas
 
-## Instalación
-(Instrucciones pendientes)
+## 🛠️ Tecnologías
+- **Backend**: Node.js, Express, Sequelize, MySQL
+- **Frontend**: HTML, CSS, JavaScript
+- **Autenticación**: JWT (JSON Web Tokens)
+- **Testing**: Jest
+
+## 📋 Requisitos
+- Node.js 14+
+- MySQL 5.7+
+- npm o yarn
+
+## 🔧 Instalación
+
+### 1. Clonar el repositorio
+```bash
+git clone https://github.com/tu-usuario/bored-api-app.git
+cd bored-api-app/backend

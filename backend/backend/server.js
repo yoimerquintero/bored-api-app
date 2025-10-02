@@ -1,84 +1,87 @@
 // server.js
-const express = require('express');
-const cors = require('cors');
-const { testConnection } = require('./config/database');
-const sequelize = require('./config/database');
-const { User, Activity, Favorite } = require('./models');
-const { authRoutes, activityRoutes, favoriteRoutes } = require('./routes');
+import dotenv from 'dotenv';
+dotenv.config();
+import express, { json } from 'express';
+import cors from 'cors';
+
+// Configuración de la base de datos
+import { testConnection, sync } from './config/database.js';
+
+// Rutas centralizadas
+import { UsuarioRoutes, ActividadRoutes, FavoritoRoutes } from './routes/index.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Middlewares
+// ------------------- Middlewares -------------------
 app.use(cors());
-app.use(express.json());
+app.use(json());
 
-// Sincronizar modelos con la base de datos
+// ------------------- Sincronizar BD -------------------
 const syncDatabase = async () => {
   try {
     await testConnection();
-    await sequelize.sync({ alter: true }); 
+    await sync({ alter: true });
     console.log('✅ Modelos sincronizados con la base de datos');
   } catch (error) {
     console.error('❌ Error al sincronizar modelos:', error);
   }
 };
 
-// Configurar rutas
-app.use('/api/auth', authRoutes);
-app.use('/api/activities', activityRoutes);
-app.use('/api/favorites', favoriteRoutes);
+// ------------------- Rutas -------------------
+app.use('/api/usuarios', UsuarioRoutes);
+app.use('/api/actividades', ActividadRoutes);
+app.use('/api/favoritos', FavoritoRoutes);
 
-// Ruta de prueba de conexión a la BD
+// Ruta de prueba BD
 app.get('/api/test-db', async (req, res) => {
   const isConnected = await testConnection();
   if (isConnected) {
-    res.json({ 
+    res.json({
       success: true,
-      message: '✅ Base de datos conectada correctamente' 
+      message: '✅ Base de datos conectada correctamente'
     });
   } else {
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
-      error: '❌ Error de conexión a la base de datos' 
+      error: '❌ Error de conexión a la base de datos'
     });
   }
 });
 
-// Ruta principal de la API
+// Ruta principal API
 app.get('/api', (req, res) => {
-  res.json({ 
+  res.json({
     success: true,
     message: '🚀 Bored API Backend funcionando!',
     version: '1.0.0',
     endpoints: {
       auth: {
-        register: 'POST /api/auth/register',
-        login: 'POST /api/auth/login',
-        profile: 'GET /api/auth/profile',
-        verify: 'GET /api/auth/verify'
+        register: 'POST /api/usuarios/registrar',
+        login: 'POST /api/usuarios/iniciar-sesion',
+        profile: 'GET /api/usuarios/perfil',
+        verify: 'GET /api/usuarios/verificar'
       },
       activities: {
-        random: 'GET /api/activities/random',
-        all: 'GET /api/activities',
-        types: 'GET /api/activities/types',
-        search: 'GET /api/activities/search',
-        byKey: 'GET /api/activities/:key'
+        random: 'GET /api/actividades/aleatoria',
+        all: 'GET /api/actividades',
+        types: 'GET /api/actividades/tipos',
+        search: 'GET /api/actividades/buscar',
+        byKey: 'GET /api/actividades/:clave'
       },
       favorites: {
-        list: 'GET /api/favorites',
-        add: 'POST /api/favorites',
-        toggle: 'POST /api/favorites/toggle',
-        remove: 'DELETE /api/favorites/:actividad_key',
-        check: 'GET /api/favorites/check/:actividad_key',
-        stats: 'GET /api/favorites/stats'
+        list: 'GET /api/favoritos',
+        add: 'POST /api/favoritos',
+        toggle: 'POST /api/favoritos/alternar',
+        remove: 'DELETE /api/favoritos/:actividad_key',
+        check: 'GET /api/favoritos/verificar/:actividad_key',
+        stats: 'GET /api/favoritos/estadisticas'
       }
-    },
-    documentation: 'Consulta el README para más información'
+    }
   });
 });
 
-// Ruta de bienvenida (raíz)
+// Ruta raíz
 app.get('/', (req, res) => {
   res.json({
     success: true,
@@ -105,17 +108,16 @@ app.use((error, req, res, next) => {
   });
 });
 
-// Iniciar servidor y sincronizar BD
+// ------------------- Iniciar servidor -------------------
 const startServer = async () => {
   await syncDatabase();
-
   app.listen(PORT, () => {
     console.log(`🎯 Servidor corriendo en http://localhost:${PORT}`);
-    console.log(`📊 Ruta de prueba BD: http://localhost:${PORT}/api/test-db`);
+    console.log(`📊 Ruta prueba BD: http://localhost:${PORT}/api/test-db`);
     console.log(`📚 Documentación: http://localhost:${PORT}/api`);
   });
 };
 
 startServer();
 
-module.exports = app;
+export default app;

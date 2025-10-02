@@ -1,26 +1,38 @@
 // config/database.js
-const { Sequelize } = require('sequelize');
-require('dotenv').config();
+import { Sequelize } from 'sequelize';
 
 const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
+  process.env.DB_NAME || 'bored_api',
+  process.env.DB_USER || 'root',
+  process.env.DB_PASS || 'merly2813',
   {
-    host: process.env.DB_HOST,
-     port: Number(process.env.DB_PORT),
+    host: process.env.DB_HOST || '127.0.0.1',
+    port: process.env.DB_PORT || 3307,
     dialect: 'mysql',
-    logging: false
+    logging: false,
   }
 );
 
-const testConnection = async () => {
+export const testConnection = async () => {
   try {
     await sequelize.authenticate();
-    console.log('✅ Conexión a la base de datos exitosa');
+    console.log('✅ Conexión a la BD establecida correctamente');
+    return true;
   } catch (error) {
-    console.error('❌ Error al conectar a la base de datos:', error);
+    console.error('❌ Error al conectar con la BD:', error);
+    return false;
   }
 };
 
-module.exports = { sequelize, testConnection };
+export const sync = async (options = {}) => {
+  try {
+    await sequelize.sync(options);
+    console.log('✅ Modelos sincronizados');
+  } catch (error) {
+    console.error('❌ Error al sincronizar modelos:', error);
+  }
+};
+
+// 👇 Exportar de las dos formas
+export { sequelize };
+export default sequelize;
