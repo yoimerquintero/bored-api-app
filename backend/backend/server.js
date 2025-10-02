@@ -7,12 +7,12 @@ import cors from 'cors';
 // Configuración de la base de datos
 import { testConnection, sync } from './config/database.js';
 
-import './models/index.js';
-
+import './models/Usuario.js';
+import './models/Actividad.js';
+import './models/Favorito.js';
 
 // Rutas centralizadas
 import { UsuarioRoutes, ActividadRoutes, FavoritoRoutes } from './routes/index.js';
-import { FORCE } from 'sequelize/lib/index-hints';
 
 const app = express();
 const PORT = process.env.PORT || 3001;

@@ -33,6 +33,6 @@ export const sync = async (options = {}) => {
   }
 };
 
-// 👇 Exportar de las dos formas
-export { sequelize };
+
+
 export default sequelize;

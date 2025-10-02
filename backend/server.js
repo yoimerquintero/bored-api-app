@@ -5,7 +5,7 @@ dotenv.config();
 import express, { json } from 'express';
 import cors from 'cors';
 
-import { testConnection } from './config/database.js';
+import sequelize, { testConnection } from './config/database.js'; // 👈 importa sequelize
 import { UsuarioRoutes, ActividadRoutes, FavoritoRoutes } from './routes/index.js';
 
 const app = express();
@@ -48,6 +48,13 @@ app.get('/api', (req, res) => {
 app.listen(PORT, async () => {
   console.log(`🌐 Servidor corriendo en http://localhost:${PORT}`);
   await testConnection();
+
+  try {
+    await sequelize.sync({ alter: true }); // 👈 sincroniza modelos con la BD
+    console.log('✅ Tablas creadas/sincronizadas en la BD');
+  } catch (error) {
+    console.error('❌ Error al sincronizar las tablas:', error);
+  }
 });
 
 export default app;
