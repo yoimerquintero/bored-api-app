@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bored API - Encuentra Actividades</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        .endpoints {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        .endpoint {
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 5px;
+        }
+        .method {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .get { background: #4CAF50; }
+        .post { background: #2196F3; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Bored API</h1>
+        <p>¿Aburrido? Encuentra actividades aleatorias para hacer</p>
+        
+        <div class="endpoints">
+            <h3>📚 Endpoints disponibles:</h3>
+            <div class="endpoint">
+                <span class="method get">GET</span>
+                <span>/api/actividades/aleatoria</span>
+            </div>
+            <div class="endpoint">
+                <span class="method post">POST</span>
+                <span>/api/usuarios/registro</span>
+            </div>
+            <div class="endpoint">
+                <span class="method post">POST</span>
+                <span>/api/usuarios/login</span>
+            </div>
+        </div>
+
+        <div id="random-activity" style="margin: 30px 0; padding: 20px; background: rgba(255,255,255,0.2); border-radius: 10px;">
+            <h3>✨ Actividad Aleatoria</h3>
+            <p id="activity-text">Haz clic para obtener una actividad</p>
+            <button onclick="getRandomActivity()" style="padding: 10px 20px; background: #ffd700; border: none; border-radius: 5px; cursor: pointer;">¡Obtener Actividad!</button>
+        </div>
+    </div>
+
+    <script>
+        async function getRandomActivity() {
+            const button = document.querySelector('button');
+            const activityText = document.getElementById('activity-text');
+            
+            button.textContent = 'Buscando...';
+            button.disabled = true;
+            
+            try {
+                const response = await fetch('/api/actividades/aleatoria');
+                const data = await response.json();
+                
+                if (data.success) {
+                    activityText.innerHTML = `
+                        <strong>${data.data.activity}</strong><br>
+                        <small>Tipo: ${data.data.type} | Participantes: ${data.data.participants}</small>
+                    `;
+                } else {
+                    activityText.textContent = 'Error al obtener la actividad';
+                }
+            } catch (error) {
+                activityText.textContent = 'Error de conexión con la API';
+            } finally {
+                button.textContent = '¡Otra Actividad!';
+                button.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
