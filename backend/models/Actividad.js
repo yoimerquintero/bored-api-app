@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import  sequelize  from '../config/database.js';
+import sequelize from '../config/database.js';
 
 const Actividad = sequelize.define('Actividad', {
   key: {
@@ -39,15 +39,17 @@ const Actividad = sequelize.define('Actividad', {
   },
   link: {
     type: DataTypes.STRING,
-    allowNull: true,
-    validate: {
-      isUrl: true
-    }
+    allowNull: true
   }
 }, {
-  tableName: 'actividades', 
-  freezeTableName: true,    
-  timestamps: false         
+  tableName: 'actividades',
+  freezeTableName: true,
+  timestamps: false
 });
+
+// Agregar método de sincronización para debugging
+Actividad.sync({ force: false })
+  .then(() => console.log('✅ Modelo Actividad sincronizado'))
+  .catch(error => console.error('❌ Error sincronizando modelo Actividad:', error));
 
 export default Actividad;

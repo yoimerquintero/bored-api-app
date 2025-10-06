@@ -1,9 +1,4 @@
-const ActividadService = require('./ActividadService');
-const UsuarioService = require('./UsuarioService');
-const FavoritoService = require('./FavoritoService');
+export { default as ActividadService } from './ActividadService.js';
+export { default as UsuarioService } from './UsuarioService.js';
+export { default as FavoritoService } from './FavoritoService.js';
 
-module.exports = {
-  ActividadService,
-  UsuarioService,
-  FavoritoService
-};

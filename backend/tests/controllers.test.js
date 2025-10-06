@@ -1,4 +1,4 @@
-const { UsuarioController, ActividadController } = require('../controllers');
+import { UsuarioController, ActividadController } from '../controllers';
 
 describe('Tests de Controladores', () => {
   let usuarioController;
